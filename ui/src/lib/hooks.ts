@@ -4,7 +4,7 @@ import type {
   Tag, Enrollment, WatchRecord, Certificate, Registration, Ticket,
   ReadingPlan, ReadingProgress, SavedMessage, Download, Donation,
   PrayerRequest, ActivityRecord,
-} from '@/lib/supabase';
+} from '@/lib/types';
 
 export interface MemberStats {
   courseCount: number;

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react';
 import { api } from '@/lib/api';
-import type { Profile } from '@/lib/supabase';
+import type { Profile } from '@/lib/types';
 
 interface AuthContextValue {
   profile: Profile | null;

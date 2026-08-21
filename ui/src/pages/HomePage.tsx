@@ -8,7 +8,7 @@ import { Progress } from '@/components/ui/Progress';
 import { events } from '@/data/seed';
 import { api, asList } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
-import type { Message } from '@/lib/supabase';
+import type { Message } from '@/lib/types';
 import type { Course, CourseDetail, CourseLesson } from '@/types';
 import { BrandPdfReaderModal, type ReadingPlanData } from '@/components/BrandPdfReaderModal';
 

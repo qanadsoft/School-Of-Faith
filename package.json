@@ -3,13 +3,13 @@
   "private": true,
   "version": "1.0.0",
   "workspaces": [
-    "client",
+    "ui",
     "server"
   ],
   "scripts": {
     "install:all": "npm.cmd install --workspaces",
     "dev": "npm.cmd run dev --workspaces --if-present",
-    "dev:client": "npm.cmd run dev --workspace client",
+    "dev:ui": "npm.cmd run dev --workspace ui",
     "dev:server": "npm.cmd run dev --workspace server",
     "build": "npm.cmd run build --workspaces --if-present",
     "lint": "npm.cmd run lint --workspaces --if-present",

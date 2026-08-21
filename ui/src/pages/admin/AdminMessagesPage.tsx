@@ -10,7 +10,7 @@ import { AdminErrorState } from '@/components/admin/AdminStates';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
 import { api, asList } from '@/lib/api';
-import type { Topic } from '@/lib/supabase';
+import type { Topic } from '@/lib/types';
 
 type MessageRow = {
   id: string;

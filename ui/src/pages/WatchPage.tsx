@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
 import { api, asList } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
-import type { Message, Topic } from '@/lib/supabase';
+import type { Message, Topic } from '@/lib/types';
 
 function formatDuration(durationMinutes?: number) {
   if (!durationMinutes || durationMinutes <= 0) return '45m';

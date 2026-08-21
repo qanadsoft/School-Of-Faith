@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/Badge';
 import { useAuth } from '@/lib/auth';
 import { useSavedMessages } from '@/lib/hooks';
 import { api } from '@/lib/api';
-import type { Message } from '@/lib/supabase';
+import type { Message } from '@/lib/types';
 
 function formatDuration(durationMinutes?: number) {
   if (!durationMinutes || durationMinutes <= 0) return '45m';

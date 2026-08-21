@@ -10,7 +10,7 @@ import { Select, Input, Textarea } from '@/components/ui/Input';
 import { Badge } from '@/components/ui/Badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/Card';
 import { api, asList } from '@/lib/api';
-import type { PrayerRequest, PrayerFocus, PrayerStats } from '@/lib/supabase';
+import type { PrayerRequest, PrayerFocus, PrayerStats } from '@/lib/types';
 import { Heart, Check, X, Archive, Trash2, Plus, Sparkles, Eye, EyeOff, Edit3, MessageSquare } from 'lucide-react';
 
 export function AdminPrayerRequestsPage() {

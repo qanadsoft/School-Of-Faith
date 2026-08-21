@@ -11,7 +11,7 @@ import { AdminErrorState } from '@/components/admin/AdminStates';
 import { Button } from '@/components/ui/Button';
 import { Input, Select } from '@/components/ui/Input';
 import { api, asList } from '@/lib/api';
-import type { Profile } from '@/lib/supabase';
+import type { Profile } from '@/lib/types';
 
 type MemberRow = Profile & { roles?: string[] };
 

@@ -6,7 +6,7 @@ import { Badge } from '@/components/ui/Badge';
 import { Textarea, Input } from '@/components/ui/Input';
 import { api, asList } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
-import type { PrayerRequest, PrayerFocus, PrayerComment } from '@/lib/supabase';
+import type { PrayerRequest, PrayerFocus, PrayerComment } from '@/lib/types';
 
 function formatTimeAgo(dateStr?: string) {
   if (!dateStr) return 'Recently';
