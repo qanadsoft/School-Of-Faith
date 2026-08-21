@@ -191,14 +191,7 @@ export function AdminMembersPage() {
       key: 'status',
       header: 'Status',
       sortable: true,
-      render: (m) => <StatusBadge status={m.membership_status} />,
-    },
-    {
-      key: 'active',
-      header: 'Active',
-      render: (m) => (
-        <StatusBadge status={m.is_active ? 'active' : 'inactive'} />
-      ),
+      render: (m) => <StatusBadge status={m.is_active ? 'Active' : 'Inactive'} />,
     },
     {
       key: 'joined',
