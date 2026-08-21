@@ -71,7 +71,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
 
   const handleSignOut = async () => {
     await signOut();
-    navigate('/');
+    navigate('/login');
   };
 
   const initials = `${profile?.first_name?.[0] ?? 'A'}${profile?.last_name?.[0] ?? ''}`;

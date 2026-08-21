@@ -56,6 +56,7 @@ function MemberRoute({ children }: { children: React.ReactNode }) {
 function PublicRoute({ children }: { children: React.ReactNode }) {
   const { profile, loading } = useAuth();
   if (loading) return <PageFallback />;
+  if (!profile) return <Navigate to="/login" replace />;
   if (profile?.role === 'admin') return <Navigate to="/admin" replace />;
   return <>{children}</>;
 }
