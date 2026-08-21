@@ -1,0 +1,20 @@
+{
+  "name": "the-school-of-faith",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "client",
+    "server"
+  ],
+  "scripts": {
+    "install:all": "npm.cmd install --workspaces",
+    "dev": "npm.cmd run dev --workspaces --if-present",
+    "dev:client": "npm.cmd run dev --workspace client",
+    "dev:server": "npm.cmd run dev --workspace server",
+    "build": "npm.cmd run build --workspaces --if-present",
+    "lint": "npm.cmd run lint --workspaces --if-present",
+    "db:migrate": "npm.cmd run db:migrate --workspace server",
+    "db:seed": "npm.cmd run db:seed --workspace server",
+    "test": "npm.cmd run test --workspaces --if-present"
+  }
+}
