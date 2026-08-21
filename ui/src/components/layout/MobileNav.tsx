@@ -13,7 +13,7 @@ const iconMap = {
 
 export function MobileNav() {
   return (
-    <nav className="fixed bottom-0 left-0 right-0 z-50 flex h-20 w-full items-center justify-around border-t bg-background/80 px-2 pb-4 pt-2 backdrop-blur-lg md:hidden">
+    <nav className="fixed bottom-0 left-0 right-0 z-40 flex h-20 w-full items-center justify-around border-t border-border bg-background/90 px-2 pb-4 pt-2 backdrop-blur-lg md:hidden">
       {navItems.map((item) => {
         const Icon = iconMap[item.icon];
         return (

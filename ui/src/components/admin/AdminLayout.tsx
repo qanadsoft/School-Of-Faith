@@ -88,7 +88,7 @@ export function AdminLayout({ children }: { children: ReactNode }) {
             aria-label="Close menu"
             onClick={() => setMobileOpen(false)}
           />
-          <aside className="relative flex h-full w-60 flex-col border-r border-border bg-card">
+          <aside className="relative flex h-[100dvh] max-h-[100dvh] w-64 flex-col border-r border-border bg-card overflow-y-auto shadow-2xl">
             <div className="border-b border-border p-4">
               <h1 className="font-serif text-xl font-medium">Admin Panel</h1>
               <p className="text-xs text-muted-foreground">School of Faith</p>

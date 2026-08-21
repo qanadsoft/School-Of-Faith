@@ -521,7 +521,7 @@ function CoursePlayerModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-2 md:p-6 overflow-y-auto">
-      <div className="relative flex flex-col w-full max-w-5xl rounded-2xl bg-card border border-border/60 shadow-2xl overflow-hidden my-auto max-h-[92vh]">
+      <div className="relative flex flex-col w-full max-w-5xl rounded-2xl bg-card border border-border/60 shadow-2xl overflow-hidden my-auto max-h-[92dvh]">
         {/* Modal Header */}
         <div className="flex items-center justify-between border-b border-border/60 px-6 py-4 bg-muted/30">
           <div>
@@ -825,8 +825,8 @@ function CertificateModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 overflow-y-auto">
-      <div className="relative flex flex-col w-full max-w-3xl rounded-2xl bg-[#FCFAF6] dark:bg-[#191816] text-[#2C2620] dark:text-[#E8E2D8] border-8 border double border-[#C69A50]/40 shadow-2xl p-6 md:p-10 my-auto">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-3 sm:p-4 overflow-y-auto">
+      <div className="relative flex flex-col w-full max-w-3xl rounded-2xl bg-[#FCFAF6] dark:bg-[#191816] text-[#2C2620] dark:text-[#E8E2D8] border-4 sm:border-8 border double border-[#C69A50]/40 shadow-2xl p-4 sm:p-6 md:p-10 my-auto max-h-[92dvh] overflow-y-auto">
         {/* Close Button */}
         <button
           type="button"

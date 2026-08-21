@@ -106,23 +106,23 @@ export function DataTable<T extends { id: string }>({
       )}
       <div className="w-full overflow-hidden rounded-2xl border border-border/80 bg-card shadow-sm">
         <div className="overflow-x-auto">
-          <table className="w-full border-collapse text-sm">
+          <table className="w-full min-w-[600px] sm:min-w-full border-collapse text-sm">
             <thead className={cn('text-left border-b border-border/70', adminShell.tableHeader)}>
               <tr>
                 {columns.map((col, idx) => (
                   <th
                     key={col.key}
                     className={cn(
-                      'py-3.5 px-4 font-semibold text-xs tracking-wider text-muted-foreground select-none',
-                      idx === 0 && 'pl-6',
-                      idx === columns.length - 1 && 'pr-6',
+                      'py-3 px-3 sm:py-3.5 sm:px-4 font-semibold text-xs tracking-wider text-muted-foreground select-none',
+                      idx === 0 && 'pl-4 sm:pl-6',
+                      idx === columns.length - 1 && 'pr-4 sm:pr-6',
                       col.className
                     )}
                   >
                     {col.sortable ? (
                       <button
                         type="button"
-                        className="inline-flex items-center gap-1.5 hover:text-foreground font-semibold transition-colors"
+                        className="inline-flex items-center gap-1.5 hover:text-foreground font-semibold transition-colors min-h-[36px]"
                         onClick={() => toggleSort(col.key)}
                       >
                         {col.header}
@@ -154,9 +154,9 @@ export function DataTable<T extends { id: string }>({
                     <td
                       key={col.key}
                       className={cn(
-                        'py-3.5 px-4 text-foreground/90 font-light',
-                        idx === 0 && 'pl-6',
-                        idx === columns.length - 1 && 'pr-6',
+                        'py-3 px-3 sm:py-3.5 sm:px-4 text-foreground/90 font-light',
+                        idx === 0 && 'pl-4 sm:pl-6',
+                        idx === columns.length - 1 && 'pr-4 sm:pr-6',
                         col.className
                       )}
                     >
@@ -170,16 +170,18 @@ export function DataTable<T extends { id: string }>({
         </div>
       </div>
       {totalPages > 1 && (
-        <div className="mt-4 flex items-center justify-end gap-2">
-          <span className="text-xs text-muted-foreground">
-            Page {currentPage} of {totalPages}
+        <div className="mt-4 flex flex-wrap items-center justify-between gap-2 text-xs">
+          <span className="text-muted-foreground">
+            Page {currentPage} of {totalPages} ({data.length} items)
           </span>
-          <Button variant="outline" size="sm" disabled={currentPage <= 1} onClick={() => setPage((p) => p - 1)}>
-            <ChevronLeft className="h-4 w-4" /> Prev
-          </Button>
-          <Button variant="outline" size="sm" disabled={currentPage >= totalPages} onClick={() => setPage((p) => p + 1)}>
-            Next <ChevronRight className="h-4 w-4" />
-          </Button>
+          <div className="flex items-center gap-1.5 ml-auto">
+            <Button variant="outline" size="sm" disabled={currentPage <= 1} onClick={() => setPage((p) => p - 1)} className="min-h-[36px] px-3">
+              <ChevronLeft className="h-4 w-4" /> Prev
+            </Button>
+            <Button variant="outline" size="sm" disabled={currentPage >= totalPages} onClick={() => setPage((p) => p + 1)} className="min-h-[36px] px-3">
+              Next <ChevronRight className="h-4 w-4" />
+            </Button>
+          </div>
         </div>
       )}
     </div>

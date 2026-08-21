@@ -93,8 +93,8 @@ export function MemberSavedMessagesPage() {
 
       {/* Video Player Modal */}
       {activeVideo && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
-          <div className="relative w-full max-w-4xl overflow-hidden rounded-2xl bg-card border border-border shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-3 sm:p-4 backdrop-blur-sm overflow-y-auto">
+          <div className="relative w-full max-w-4xl max-h-[92dvh] overflow-y-auto rounded-2xl bg-card border border-border shadow-2xl my-auto">
             <div className="flex items-center justify-between border-b border-border p-4">
               <div>
                 <h3 className="font-serif text-xl font-semibold">{activeVideo.title}</h3>

@@ -469,8 +469,8 @@ export function AdminCommunityPage() {
 
       {/* ─── Post Comments Moderation Modal ─────────────────────────────────── */}
       {selectedPost && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-xl rounded-3xl border border-border bg-card p-6 shadow-2xl space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-3 sm:p-4 backdrop-blur-sm overflow-y-auto">
+          <div className="w-full max-w-xl max-h-[90dvh] overflow-y-auto rounded-3xl border border-border bg-card p-4 sm:p-6 shadow-2xl space-y-4 my-auto">
             <div className="flex items-center justify-between border-b border-border pb-3">
               <h3 className="font-serif text-lg font-semibold text-foreground">
                 Moderate Post Comments

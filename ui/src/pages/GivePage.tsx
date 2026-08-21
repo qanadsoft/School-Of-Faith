@@ -414,8 +414,8 @@ export function GivePage() {
 
       {/* Success Modal */}
       {donationSuccess && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-          <Card className="w-full max-w-md p-6 space-y-5 shadow-2xl relative animate-in fade-in zoom-in duration-200">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-3 sm:p-4 backdrop-blur-sm overflow-y-auto">
+          <Card className="w-full max-w-md max-h-[90dvh] overflow-y-auto p-4 sm:p-6 space-y-5 shadow-2xl relative my-auto animate-in fade-in zoom-in duration-200">
             <button
               type="button"
               onClick={() => setDonationSuccess(null)}

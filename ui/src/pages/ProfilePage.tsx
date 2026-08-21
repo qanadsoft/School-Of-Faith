@@ -320,13 +320,14 @@ export function ProfilePage() {
 
       {/* ─── Account Settings & Profile Image Edit Modal ─── */}
       {settingsOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-md overflow-hidden rounded-3xl bg-background border border-border shadow-2xl space-y-6 p-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-3 sm:p-4 backdrop-blur-sm overflow-y-auto">
+          <div className="w-full max-w-md max-h-[90dvh] overflow-y-auto rounded-3xl bg-background border border-border shadow-2xl my-auto space-y-4 sm:space-y-6 p-4 sm:p-6">
             <div className="flex items-center justify-between border-b border-border/60 pb-3">
-              <h3 className="font-serif text-xl font-semibold text-foreground">Edit Account Profile</h3>
+              <h3 className="font-serif text-lg sm:text-xl font-semibold text-foreground">Edit Account Profile</h3>
               <button
                 onClick={() => setSettingsOpen(false)}
-                className="rounded-full p-1.5 text-muted-foreground hover:bg-muted hover:text-foreground"
+                className="rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
+                aria-label="Close"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -334,7 +335,7 @@ export function ProfilePage() {
 
             {/* Profile Avatar Upload & Preview */}
             <div className="flex flex-col items-center space-y-3">
-              <div className="relative flex h-28 w-28 items-center justify-center rounded-full bg-[#C69A50] text-3xl font-serif font-medium text-white shadow-md overflow-hidden">
+              <div className="relative flex h-24 w-24 sm:h-28 sm:w-28 items-center justify-center rounded-full bg-[#C69A50] text-2xl sm:text-3xl font-serif font-medium text-white shadow-md overflow-hidden shrink-0">
                 {previewImage ? (
                   <img src={previewImage} alt="Profile Preview" className="h-full w-full object-cover" />
                 ) : (
@@ -342,7 +343,7 @@ export function ProfilePage() {
                 )}
               </div>
 
-              <div className="flex items-center gap-2">
+              <div className="flex flex-wrap items-center justify-center gap-2">
                 <input
                   type="file"
                   ref={fileInputRef}
@@ -355,7 +356,7 @@ export function ProfilePage() {
                   variant="outline"
                   size="sm"
                   onClick={() => fileInputRef.current?.click()}
-                  className="gap-1.5 text-xs"
+                  className="gap-1.5 text-xs min-h-[38px] px-3"
                 >
                   <Upload className="h-3.5 w-3.5" /> Upload Photo
                 </Button>
@@ -365,13 +366,13 @@ export function ProfilePage() {
                     variant="ghost"
                     size="sm"
                     onClick={handleRemovePhoto}
-                    className="gap-1 text-xs text-destructive hover:bg-destructive/10"
+                    className="gap-1 text-xs text-destructive hover:bg-destructive/10 min-h-[38px] px-3"
                   >
                     <Trash2 className="h-3.5 w-3.5" /> Remove
                   </Button>
                 )}
               </div>
-              <p className="text-[11px] text-muted-foreground">Supported: JPG, PNG, WebP, GIF (Max 5MB)</p>
+              <p className="text-[11px] text-muted-foreground text-center">Supported: JPG, PNG, WebP, GIF (Max 5MB)</p>
             </div>
 
             {imageError && (
@@ -382,7 +383,7 @@ export function ProfilePage() {
 
             {/* Form Inputs */}
             <div className="space-y-4">
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="text-xs font-medium text-muted-foreground block mb-1">First Name</label>
                   <Input
@@ -413,15 +414,15 @@ export function ProfilePage() {
             </div>
 
             {/* Actions */}
-            <div className="flex justify-end gap-2 pt-2 border-t border-border/60">
-              <Button variant="outline" size="sm" onClick={() => setSettingsOpen(false)}>
+            <div className="flex flex-wrap justify-end gap-2 pt-3 border-t border-border/60">
+              <Button variant="outline" size="sm" onClick={() => setSettingsOpen(false)} className="min-h-[40px] px-4">
                 Cancel
               </Button>
               <Button
                 size="sm"
                 onClick={handleSaveProfile}
                 disabled={isSaving}
-                className="bg-[#C59B46] hover:bg-[#b0843d] text-white gap-1.5"
+                className="bg-[#C59B46] hover:bg-[#b0843d] text-white gap-1.5 min-h-[40px] px-4"
               >
                 {isSaving ? 'Saving...' : 'Save Profile'}
               </Button>

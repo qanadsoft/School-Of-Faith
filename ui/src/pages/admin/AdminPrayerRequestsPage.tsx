@@ -552,8 +552,8 @@ export function AdminPrayerRequestsPage() {
 
       {/* Focus Editor Modal */}
       {showFocusModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm">
-          <div className="relative w-full max-w-lg rounded-2xl bg-card border border-border p-6 shadow-2xl space-y-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-3 sm:p-4 backdrop-blur-sm overflow-y-auto">
+          <div className="relative w-full max-w-lg max-h-[90dvh] overflow-y-auto rounded-2xl bg-card border border-border p-4 sm:p-6 shadow-2xl space-y-4 my-auto">
             <div className="flex items-center justify-between border-b border-border pb-3">
               <h3 className="font-serif text-xl font-semibold">
                 {editingFocus ? 'Edit Daily Prayer Focus' : 'Create Daily Prayer Focus'}

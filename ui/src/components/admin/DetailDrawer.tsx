@@ -20,11 +20,16 @@ export function DetailDrawer({
 }) {
   useEffect(() => {
     if (!open) return;
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
     };
     document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = originalOverflow;
+      document.removeEventListener('keydown', onKey);
+    };
   }, [open, onClose]);
 
   if (!open) return null;
@@ -33,25 +38,25 @@ export function DetailDrawer({
     <div className="fixed inset-0 z-50 flex justify-end">
       <button
         type="button"
-        className="absolute inset-0 bg-foreground/20 backdrop-blur-sm"
+        className="absolute inset-0 bg-foreground/30 backdrop-blur-sm"
         aria-label="Close panel"
         onClick={onClose}
       />
       <aside
         className={cn(
-          'relative flex h-full flex-col border-l border-border bg-card shadow-sm',
-          wide ? 'w-full max-w-2xl' : 'w-full max-w-lg',
+          'relative flex h-[100dvh] max-h-[100dvh] w-full flex-col border-l border-border bg-card shadow-2xl',
+          wide ? 'max-w-full sm:max-w-2xl' : 'max-w-full sm:max-w-lg',
         )}
       >
-        <div className="flex h-16 shrink-0 items-center justify-between border-b border-border px-6">
-          <h2 className="text-lg font-semibold">{title}</h2>
-          <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close">
+        <div className="flex h-16 shrink-0 items-center justify-between border-b border-border px-4 sm:px-6">
+          <h2 className="text-base sm:text-lg font-semibold pr-2 line-clamp-1">{title}</h2>
+          <Button variant="ghost" size="icon" onClick={onClose} aria-label="Close" className="h-9 w-9 shrink-0">
             <X className="h-5 w-5" />
           </Button>
         </div>
-        <div className="flex-1 overflow-y-auto px-6 py-4">{children}</div>
+        <div className="flex-1 overflow-y-auto px-4 sm:px-6 py-4">{children}</div>
         {footer && (
-          <div className="flex shrink-0 items-center justify-end gap-2 border-t border-border px-6 py-4">
+          <div className="flex shrink-0 items-center justify-end gap-2 border-t border-border px-4 sm:px-6 py-3.5 bg-muted/20">
             {footer}
           </div>
         )}

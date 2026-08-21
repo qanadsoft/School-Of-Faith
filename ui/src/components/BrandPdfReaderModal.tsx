@@ -274,55 +274,62 @@ export function BrandPdfReaderModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-2 sm:p-4 backdrop-blur-md">
-      <div className="flex h-[92vh] w-full max-w-5xl flex-col overflow-hidden rounded-3xl border border-[#E8DFC8] bg-[#FDFBF7] shadow-2xl dark:bg-card dark:border-border">
+      <div className="flex h-[94dvh] max-h-[94dvh] w-full max-w-5xl flex-col overflow-hidden rounded-2xl sm:rounded-3xl border border-[#E8DFC8] bg-[#FDFBF7] shadow-2xl dark:bg-card dark:border-border">
         {/* ─── Top Bar ──────────────────────────────────────────────────────── */}
-        <header className="flex items-center justify-between border-b border-[#E8DFC8]/70 bg-white/80 px-5 py-3.5 backdrop-blur-md dark:bg-card dark:border-border">
-          <div className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#C59B46] text-white shadow-sm">
-              <BookOpen className="h-5 w-5" />
+        <header className="flex flex-wrap items-center justify-between gap-2 border-b border-[#E8DFC8]/70 bg-white/80 px-3.5 sm:px-5 py-3 backdrop-blur-md dark:bg-card dark:border-border shrink-0">
+          <div className="flex items-center gap-2.5 min-w-0">
+            <button
+              onClick={() => setSidebarOpen(!sidebarOpen)}
+              className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#FAF5EB] text-[#C59B46] border border-[#E8DFC8]/80 md:hidden shrink-0"
+              aria-label="Toggle Days Navigation"
+            >
+              <BookOpen className="h-4 w-4" />
+            </button>
+            <div className="hidden sm:flex h-9 w-9 items-center justify-center rounded-xl bg-[#C59B46] text-white shadow-sm shrink-0">
+              <BookOpen className="h-4 w-4" />
             </div>
-            <div>
+            <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <h3 className="font-serif text-lg font-semibold text-[#1A1A1A] dark:text-foreground">
+                <h3 className="font-serif text-sm sm:text-lg font-semibold text-[#1A1A1A] dark:text-foreground truncate">
                   {activePlan?.name || '30-Day Scripture Journal'}
                 </h3>
-                <span className="hidden sm:inline-block rounded-full bg-[#C59B46]/10 px-2.5 py-0.5 text-[11px] font-semibold text-[#C59B46]">
+                <span className="hidden lg:inline-block rounded-full bg-[#C59B46]/10 px-2 py-0.5 text-[10px] font-semibold text-[#C59B46]">
                   {activePlan?.badge_text || 'Official Guide'}
                 </span>
               </div>
-              <p className="text-xs text-muted-foreground font-light">
+              <p className="text-[11px] text-muted-foreground font-light truncate">
                 Day {currentDay} of {totalDays} • {completedCount} Completed ({progressPercent}%)
               </p>
             </div>
           </div>
 
           {/* Action Buttons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5 ml-auto">
             {/* View Mode Toggle */}
             {activePlan?.pdf_url && (
-              <div className="hidden sm:flex items-center rounded-full bg-[#F5EFE6] p-1 text-xs font-medium dark:bg-muted">
+              <div className="flex items-center rounded-full bg-[#F5EFE6] p-0.5 text-[11px] font-medium dark:bg-muted">
                 <button
                   onClick={() => setViewMode('journal')}
-                  className={`rounded-full px-3 py-1 transition-all ${
+                  className={`rounded-full px-2.5 py-1 transition-all ${
                     viewMode === 'journal'
                       ? 'bg-[#C59B46] text-white shadow-sm'
                       : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   <span className="flex items-center gap-1">
-                    <BookOpen className="h-3.5 w-3.5" /> Journal
+                    <BookOpen className="h-3 w-3" /> Journal
                   </span>
                 </button>
                 <button
                   onClick={() => setViewMode('pdf')}
-                  className={`rounded-full px-3 py-1 transition-all ${
+                  className={`rounded-full px-2.5 py-1 transition-all ${
                     viewMode === 'pdf'
                       ? 'bg-[#C59B46] text-white shadow-sm'
                       : 'text-muted-foreground hover:text-foreground'
                   }`}
                 >
                   <span className="flex items-center gap-1">
-                    <FileText className="h-3.5 w-3.5" /> PDF View
+                    <FileText className="h-3 w-3" /> PDF
                   </span>
                 </button>
               </div>
@@ -331,17 +338,18 @@ export function BrandPdfReaderModal({
             {/* Print / Download Button */}
             <button
               onClick={handlePrint}
-              className="flex h-9 items-center gap-1.5 rounded-full border border-[#E8DFC8] bg-white px-3.5 text-xs font-medium text-foreground shadow-sm hover:bg-[#FAF5EB] transition-all dark:bg-card dark:border-border"
+              className="flex h-8 sm:h-9 items-center gap-1.5 rounded-full border border-[#E8DFC8] bg-white px-2.5 sm:px-3.5 text-xs font-medium text-foreground shadow-sm hover:bg-[#FAF5EB] transition-all dark:bg-card dark:border-border"
               title="Print / Save as PDF"
             >
-              <Printer className="h-4 w-4 text-[#C59B46]" />
-              <span className="hidden md:inline">Print / Download</span>
+              <Printer className="h-3.5 w-3.5 text-[#C59B46]" />
+              <span className="hidden sm:inline">Print / Download</span>
             </button>
 
             {/* Close Button */}
             <button
               onClick={onClose}
-              className="flex h-9 w-9 items-center justify-center rounded-full text-muted-foreground hover:bg-muted transition-colors ml-1"
+              className="flex h-8 w-8 sm:h-9 sm:w-9 items-center justify-center rounded-full text-muted-foreground hover:bg-muted transition-colors"
+              aria-label="Close modal"
             >
               <X className="h-5 w-5" />
             </button>

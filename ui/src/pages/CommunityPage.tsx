@@ -649,8 +649,8 @@ export function CommunityPage() {
 
       {/* ─── Create Post Modal (Exact Reference Match) ────────────────────────── */}
       {createModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-lg rounded-3xl border border-[#E5DEC9] bg-white p-6 shadow-2xl dark:bg-card dark:border-border">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-3 sm:p-4 backdrop-blur-sm overflow-y-auto">
+          <div className="w-full max-w-lg max-h-[90dvh] overflow-y-auto rounded-3xl border border-[#E5DEC9] bg-white p-4 sm:p-6 shadow-2xl dark:bg-card dark:border-border my-auto">
             {/* Modal Header */}
             <div className="flex items-center justify-between border-b border-[#EBE3D5] pb-4 dark:border-border">
               <h3 className="font-serif text-2xl font-normal text-foreground">
@@ -738,8 +738,8 @@ export function CommunityPage() {
 
       {/* ─── Edit Post Modal ────────────────────────────────────────────────── */}
       {editPost && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-lg rounded-3xl border border-[#E5DEC9] bg-white p-6 shadow-2xl dark:bg-card dark:border-border">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-3 sm:p-4 backdrop-blur-sm overflow-y-auto">
+          <div className="w-full max-w-lg max-h-[90dvh] overflow-y-auto rounded-3xl border border-[#E5DEC9] bg-white p-4 sm:p-6 shadow-2xl dark:bg-card dark:border-border my-auto">
             <div className="flex items-center justify-between border-b border-[#EBE3D5] pb-4 dark:border-border">
               <h3 className="font-serif text-2xl font-normal text-foreground">Edit Post</h3>
               <button
@@ -813,8 +813,8 @@ export function CommunityPage() {
 
       {/* ─── Report Post Modal ──────────────────────────────────────────────── */}
       {reportPost && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm">
-          <div className="w-full max-w-md rounded-3xl border border-border bg-white p-6 shadow-2xl dark:bg-card">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-3 sm:p-4 backdrop-blur-sm overflow-y-auto">
+          <div className="w-full max-w-md max-h-[90dvh] overflow-y-auto rounded-3xl border border-border bg-white p-4 sm:p-6 shadow-2xl dark:bg-card my-auto">
             <div className="flex items-center justify-between border-b border-border pb-4">
               <h3 className="font-serif text-lg font-semibold text-foreground flex items-center gap-2 text-destructive">
                 <Flag className="h-5 w-5" />

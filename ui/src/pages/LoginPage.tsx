@@ -37,8 +37,8 @@ export function LoginPage() {
   };
 
   return (
-    <div className="flex min-h-[100dvh] items-center justify-center bg-background p-4">
-      <div className="w-full max-w-md space-y-6">
+    <div className="flex min-h-[100dvh] items-center justify-center bg-background p-4 overflow-y-auto">
+      <div className="w-full max-w-md space-y-6 my-auto py-6">
         <div className="text-center">
           <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-primary text-primary-foreground">
             <BookOpen className="h-8 w-8" />

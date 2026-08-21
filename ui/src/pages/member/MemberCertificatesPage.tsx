@@ -138,8 +138,8 @@ export function MemberCertificatesPage() {
 
       {/* Certificate Modal Overlay */}
       {selectedCert && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm">
-          <div className="relative w-full max-w-2xl overflow-hidden rounded-2xl bg-background border border-border shadow-2xl">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-3 sm:p-4 backdrop-blur-sm overflow-y-auto">
+          <div className="relative w-full max-w-2xl max-h-[92dvh] overflow-y-auto rounded-2xl bg-background border border-border shadow-2xl my-auto">
             <button
               onClick={() => setSelectedCert(null)}
               className="absolute right-4 top-4 z-10 rounded-full p-2 text-muted-foreground hover:bg-muted hover:text-foreground"
