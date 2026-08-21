@@ -16,20 +16,51 @@ class APIClient {
   }
 
   private getAuthToken(): string | null {
-    return localStorage.getItem('authToken');
+    try {
+      const token = localStorage.getItem('authToken') || localStorage.getItem('token');
+      if (!token) return null;
+      const cleanToken = token.replace(/^"+|"+$/g, '').trim();
+      if (!cleanToken || cleanToken === 'null' || cleanToken === 'undefined') {
+        return null;
+      }
+      return cleanToken;
+    } catch {
+      return null;
+    }
   }
 
   private async request<T>(endpoint: string, options: RequestOptions = {}): Promise<T> {
     const { skipAuth = false, ...fetchOptions } = options;
     const url = `${this.baseUrl}${endpoint}`;
+
+    const customHeaders: Record<string, string> = {};
+    if (fetchOptions.headers) {
+      if (fetchOptions.headers instanceof Headers) {
+        fetchOptions.headers.forEach((val, key) => {
+          customHeaders[key] = val;
+        });
+      } else if (Array.isArray(fetchOptions.headers)) {
+        fetchOptions.headers.forEach(([key, val]) => {
+          customHeaders[key] = val;
+        });
+      } else {
+        Object.assign(customHeaders, fetchOptions.headers);
+      }
+    }
+
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...(fetchOptions.headers as Record<string, string>),
+      ...customHeaders,
     };
 
     if (!skipAuth) {
       const token = this.getAuthToken();
-      if (token) headers['Authorization'] = `Bearer ${token}`;
+      const hasAuthHeader = Object.keys(headers).some(
+        (h) => h.toLowerCase() === 'authorization'
+      );
+      if (token && !hasAuthHeader) {
+        headers['Authorization'] = `Bearer ${token}`;
+      }
     }
 
     const response = await fetch(url, { ...fetchOptions, headers });
