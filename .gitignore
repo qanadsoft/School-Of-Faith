@@ -3,7 +3,5 @@ dist
 .env
 .env.local
 .DS_Store
-coverage
-client/node_modules
 server/node_modules
 server/uploads
