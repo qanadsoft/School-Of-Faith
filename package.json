@@ -7,14 +7,14 @@
     "server"
   ],
   "scripts": {
-    "install:all": "npm.cmd install --workspaces",
-    "dev": "npm.cmd run dev --workspaces --if-present",
-    "dev:ui": "npm.cmd run dev --workspace ui",
-    "dev:server": "npm.cmd run dev --workspace server",
-    "build": "npm.cmd run build --workspaces --if-present",
-    "lint": "npm.cmd run lint --workspaces --if-present",
-    "db:migrate": "npm.cmd run db:migrate --workspace server",
-    "db:seed": "npm.cmd run db:seed --workspace server",
-    "test": "npm.cmd run test --workspaces --if-present"
+    "install:all": "npm install --workspaces",
+    "dev": "npm run dev --workspaces --if-present",
+    "dev:ui": "npm run dev --workspace ui",
+    "dev:server": "npm run dev --workspace server",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "db:migrate": "npm run db:migrate --workspace server",
+    "db:seed": "npm run db:seed --workspace server",
+    "test": "npm run test --workspaces --if-present"
   }
 }
