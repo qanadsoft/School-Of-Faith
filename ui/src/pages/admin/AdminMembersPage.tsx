@@ -50,10 +50,12 @@ export function AdminMembersPage() {
       setError(false);
       const data = await api.getAdminMembers();
       setMembers(
-        asList<MemberRow>(data).map((m) => ({
-          ...m,
-          role: m.roles?.includes('admin') ? 'admin' : 'member',
-        })),
+        asList<MemberRow>(data)
+          .filter((m) => m.roles?.includes('member'))
+          .map((m) => ({
+            ...m,
+            role: m.roles?.includes('admin') ? 'admin' : 'member',
+          })),
       );
     } catch {
       setError(true);
