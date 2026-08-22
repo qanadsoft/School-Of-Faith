@@ -31,11 +31,6 @@ export function LoginPage() {
     }
   };
 
-  const fillDemo = (em: string, pw: string) => {
-    setEmail(em);
-    setPassword(pw);
-  };
-
   return (
     <div className="flex min-h-[100dvh] items-center justify-center bg-background p-4 overflow-y-auto">
       <div className="w-full max-w-md space-y-6 my-auto py-6">
@@ -74,24 +69,6 @@ export function LoginPage() {
             {loading ? 'Signing in...' : 'Sign In'}
           </Button>
         </form>
-
-        <div className="rounded-lg border border-border bg-muted/50 p-4 text-sm">
-          <p className="mb-2 font-semibold text-foreground">Demo Accounts</p>
-          <div className="space-y-2">
-            <button
-              onClick={() => fillDemo('sarah@example.com', 'Faithful123!')}
-              className="block w-full text-left text-muted-foreground hover:text-primary"
-            >
-              Member: sarah@example.com / Faithful123!
-            </button>
-            <button
-              onClick={() => fillDemo('admin@example.com', 'AdminFaith123!')}
-              className="block w-full text-left text-muted-foreground hover:text-primary"
-            >
-              Admin: admin@example.com / AdminFaith123!
-            </button>
-          </div>
-        </div>
       </div>
     </div>
   );
