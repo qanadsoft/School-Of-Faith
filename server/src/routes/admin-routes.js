@@ -972,6 +972,7 @@ const messageSchema = z.object({
   description: z.string().nullable().optional().default(""),
   thumbnailUrl: z.string().nullable().optional().or(z.literal("")),
   videoUrl: z.string().nullable().optional().or(z.literal("")),
+  captionUrl: z.string().nullable().optional().or(z.literal("")),
   durationMinutes: z
     .union([z.number(), z.string()])
     .optional()
@@ -992,8 +993,8 @@ router.post(
   asyncHandler(async (req, res) => {
     const result = await query(
       `
-        INSERT INTO messages (title, speaker, category, description, thumbnail_url, video_url, duration_minutes, original_url, published_at, archived)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+        INSERT INTO messages (title, speaker, category, description, thumbnail_url, video_url, caption_url, duration_minutes, original_url, published_at, archived)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
         RETURNING *
       `,
       [
@@ -1003,6 +1004,7 @@ router.post(
         sanitizeText(req.body.description ?? ""),
         req.body.thumbnailUrl ?? null,
         req.body.videoUrl ?? null,
+        req.body.captionUrl ?? null,
         req.body.durationMinutes ?? 0,
         req.body.originalUrl || "#",
         req.body.publishedAt,
@@ -1034,9 +1036,9 @@ router.put(
       `
         UPDATE messages
         SET title = $1, speaker = $2, category = $3, description = $4,
-            thumbnail_url = $5, video_url = $6, duration_minutes = $7,
-            original_url = $8, published_at = $9, archived = $10, updated_at = NOW()
-        WHERE id = $11
+            thumbnail_url = $5, video_url = $6, caption_url = $7, duration_minutes = $8,
+            original_url = $9, published_at = $10, archived = $11, updated_at = NOW()
+        WHERE id = $12
         RETURNING *
       `,
       [
@@ -1046,6 +1048,7 @@ router.put(
         sanitizeText(req.body.description ?? ""),
         req.body.thumbnailUrl ?? null,
         req.body.videoUrl ?? null,
+        req.body.captionUrl ?? null,
         req.body.durationMinutes ?? 0,
         req.body.originalUrl || "#",
         req.body.publishedAt,

@@ -82,15 +82,6 @@ async function seedMemoryDatabase(pool) {
     event2: "40000000-0000-0000-0000-000000000002",
     event3: "40000000-0000-0000-0000-000000000003",
     plan1: "50000000-0000-0000-0000-000000000001",
-    message1: "60000000-0000-0000-0000-000000000001",
-    message2: "60000000-0000-0000-0000-000000000002",
-    message3: "60000000-0000-0000-0000-000000000003",
-    message4: "60000000-0000-0000-0000-000000000004",
-    message5: "60000000-0000-0000-0000-000000000005",
-    message6: "60000000-0000-0000-0000-000000000006",
-    message7: "60000000-0000-0000-0000-000000000007",
-    message8: "60000000-0000-0000-0000-000000000008",
-    message9: "60000000-0000-0000-0000-000000000009",
     topicFaith: "70000000-0000-0000-0000-000000000001",
     topicFamily: "70000000-0000-0000-0000-000000000002",
     topicPurpose: "70000000-0000-0000-0000-000000000003",
@@ -365,21 +356,6 @@ async function seedMemoryDatabase(pool) {
       );
     }
 
-    // Messages (videos)
-    await client.query(
-      `INSERT INTO messages (id, title, speaker, category, description, original_url, published_at, archived, thumbnail_url, video_url, duration_minutes) VALUES
-        ($1, 'Faith in Action (2-Min Word)', 'Pastor Sarah Jenkins', 'Faith', 'A powerful 2-minute devotional encouraging you to stand firm in faith and praise today.', 'https://schooloffaith.test/messages/faith-in-action', '2024-11-01', FALSE, 'https://images.unsplash.com/photo-1507692049790-de58290a4334?auto=format&fit=crop&w=900&q=80', 'https://www.w3schools.com/html/mov_bbb.mp4', 2),
-        ($2, 'The Power of Forgiveness', 'Pastor Michael', 'Teaching', 'Discover the freedom and spiritual breakthrough that comes with releasing offense and walking in grace.', 'https://schooloffaith.test/messages/power-of-forgiveness', '2024-10-15', FALSE, 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=900&q=80', 'https://vjs.zencdn.net/v/oceans.mp4', 45),
-        ($3, 'Finding Peace in Chaos', 'Dr. Robert Smith', 'Hope Restored', 'Anchoring your mind and soul in God''s supernatural peace during life''s storms.', 'https://schooloffaith.test/messages/finding-peace', '2024-10-08', FALSE, 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80', 'https://media.w3.org/2010/05/sintel/trailer.mp4', 52),
-        ($4, 'The Anchor of the Soul', 'Pastor Sarah Jenkins', 'Hope Restored', 'A study on biblical hope from Hebrews 6:19 that withstands cultural shifting.', 'https://schooloffaith.test/messages/anchor-of-the-soul', '2024-10-01', FALSE, 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80', 'https://cdn.plyr.io/static/demo/View_From_A_Blue_Moon_Trailer-576p.mp4', 65),
-        ($5, 'Walking in the Spirit', 'Pastor Michael', 'Holy Spirit', 'Cultivating daily sensitivity to the Holy Spirit''s guidance and prompting.', 'https://schooloffaith.test/messages/walking-in-spirit', '2024-09-24', FALSE, 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=900&q=80', 'https://vjs.zencdn.net/v/oceans.mp4', 48),
-        ($6, 'Restoring Broken Relationships', 'Dr. Robert Smith', 'Family', 'Biblical principles for reconciliation, healthy communication, and healing family bonds.', 'https://schooloffaith.test/messages/restoring-relationships', '2024-09-17', FALSE, 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?auto=format&fit=crop&w=900&q=80', 'https://media.w3.org/2010/05/sintel/trailer.mp4', 55),
-        ($7, 'Vision Sunday 2024', 'Pastor Sarah Jenkins', 'Vision', 'Aligning our hearts with God''s strategic purpose for the upcoming ministry year.', 'https://schooloffaith.test/messages/vision-sunday-2024', '2024-09-10', FALSE, 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=900&q=80', 'https://www.w3schools.com/html/mov_bbb.mp4', 70),
-        ($8, 'The Grace Revolution', 'Pastor Michael', 'Teaching', 'Understanding the unearned favor and transformative power of Christ''s righteousness.', 'https://schooloffaith.test/messages/grace-revolution', '2024-09-03', FALSE, 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=900&q=80', 'https://vjs.zencdn.net/v/oceans.mp4', 60),
-        ($9, 'Leading with Purpose', 'Dr. Robert Smith', 'Leadership', 'Servant leadership modeled on the life and teachings of Jesus Christ.', 'https://schooloffaith.test/messages/leading-with-purpose', '2024-08-27', FALSE, 'https://images.unsplash.com/photo-1504052434569-70ad5836ab65?auto=format&fit=crop&w=900&q=80', 'https://media.w3.org/2010/05/sintel/trailer.mp4', 50)`,
-      [ids.message9, ids.message1, ids.message2, ids.message3, ids.message4, ids.message5, ids.message6, ids.message7, ids.message8]
-    );
-
     // Topics
     await client.query(
       `INSERT INTO topics (id, name, slug, icon, sort_order) VALUES
@@ -388,30 +364,6 @@ async function seedMemoryDatabase(pool) {
         ($5, 'Holy Spirit', 'holy-spirit', 'Flame', 5), ($6, 'Grace', 'grace', 'Sparkles', 6),
         ($7, 'Leadership', 'leadership', 'Crown', 7), ($8, 'Prayer', 'prayer', 'HandHeart', 8)`,
       [ids.topicFaith, ids.topicFamily, ids.topicPurpose, ids.topicHealing, ids.topicHolySpirit, ids.topicGrace, ids.topicLeadership, ids.topicPrayer]
-    );
-
-    // Message-topic mappings
-    await client.query(
-      `INSERT INTO message_topics (message_id, topic_id) VALUES
-        ($1, $10), ($1, $15), ($1, $17),
-        ($2, $13), ($2, $15), ($2, $10),
-        ($3, $10), ($3, $13), ($3, $17),
-        ($4, $10), ($4, $12),
-        ($5, $14), ($5, $17), ($5, $10),
-        ($6, $11), ($6, $15), ($6, $13),
-        ($7, $12), ($7, $16),
-        ($8, $15), ($8, $10),
-        ($9, $16), ($9, $12)`,
-      [
-        ids.message9, ids.message1, ids.message2, ids.message3, ids.message4, ids.message5, ids.message6, ids.message7, ids.message8,
-        ids.topicFaith, ids.topicFamily, ids.topicPurpose, ids.topicHealing, ids.topicHolySpirit, ids.topicGrace, ids.topicLeadership, ids.topicPrayer,
-      ]
-    );
-
-    // Saved messages
-    await client.query(
-      `INSERT INTO saved_messages (member_id, message_id, saved_at) VALUES ($1, $2, '2026-06-05'), ($1, $3, '2026-07-20')`,
-      [ids.sarah, ids.message2, ids.message3]
     );
 
     // Downloads
@@ -508,9 +460,8 @@ async function seedMemoryDatabase(pool) {
         ($1, 'event_attended', 'Attended Worship Night', 'event', $4, '2025-03-14'),
         ($1, 'donation_made', 'Completed donation to Global Missions', 'donation', NULL, '2026-06-15'),
         ($1, 'reading_completed', 'Completed Day 14 of The Gospels in 30 Days', 'reading_plan', $5, '2026-08-10'),
-        ($1, 'message_saved', 'Saved The Anchor of the Soul', 'message', $6, '2026-07-20'),
         ($1, 'download_performed', 'Downloaded Romans Study Notes', 'download', NULL, '2026-07-14')`,
-      [ids.sarah, ids.course3, ids.course2, ids.event1, ids.plan1, ids.message3]
+      [ids.sarah, ids.course3, ids.course2, ids.event1, ids.plan1]
     );
 
     // Community Categories

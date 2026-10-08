@@ -11,13 +11,8 @@ import { useAuth } from '@/lib/auth';
 import type { Message } from '@/lib/types';
 import type { Course, CourseDetail, CourseLesson } from '@/types';
 import { BrandPdfReaderModal, type ReadingPlanData } from '@/components/BrandPdfReaderModal';
-
-function formatDuration(durationMinutes?: number) {
-  if (!durationMinutes || durationMinutes <= 0) return '45m';
-  const hours = Math.floor(durationMinutes / 60);
-  const mins = durationMinutes % 60;
-  return hours > 0 ? `${hours}h ${mins > 0 ? `${mins}m` : ''}` : `${mins}m`;
-}
+import { VideoCaptionTrack } from '@/components/VideoCaptionTrack';
+import { formatVideoDuration } from '@/lib/video';
 
 function formatDate(dateStr?: string) {
   if (!dateStr) return '';
@@ -273,7 +268,7 @@ export function HomePage() {
                 </Badge>
                 <span>{formatDate(featuredVideo.published_at)}</span>
                 <span>·</span>
-                <span>{formatDuration(featuredVideo.duration_minutes)}</span>
+                <span>{formatVideoDuration(featuredVideo.duration_minutes)}</span>
                 <span>·</span>
                 <span>{featuredVideo.speaker}</span>
               </div>
@@ -490,7 +485,7 @@ export function HomePage() {
                   )}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  {activeVideo.speaker} · {formatDate(activeVideo.published_at)} · {formatDuration(activeVideo.duration_minutes)}
+                  {activeVideo.speaker} · {formatDate(activeVideo.published_at)} · {formatVideoDuration(activeVideo.duration_minutes)}
                 </p>
               </div>
               <button
@@ -503,7 +498,6 @@ export function HomePage() {
             <div className="bg-black">
               <video
                 key={activeVideo.id}
-                src={activeVideo.video_url || 'https://vjs.zencdn.net/v/oceans.mp4'}
                 poster={activeVideo.thumbnail_url || undefined}
                 controls
                 autoPlay
@@ -511,10 +505,8 @@ export function HomePage() {
                 preload="auto"
                 className="aspect-video w-full object-contain"
               >
-                <source
-                  src={activeVideo.video_url || 'https://vjs.zencdn.net/v/oceans.mp4'}
-                  type="video/mp4"
-                />
+                {activeVideo.video_url && <source src={activeVideo.video_url} type="video/mp4" />}
+                <VideoCaptionTrack src={activeVideo.caption_url} />
                 Your browser does not support HTML5 video streaming.
               </video>
             </div>

@@ -141,6 +141,7 @@ export type Message = {
   archived: boolean;
   thumbnail_url?: string | null;
   video_url?: string | null;
+  caption_url?: string | null;
   duration_minutes?: number;
   topics?: Topic[];
   progress?: VideoWatchProgress;

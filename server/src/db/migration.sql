@@ -258,6 +258,7 @@ CREATE TABLE IF NOT EXISTS messages (
   description TEXT NOT NULL DEFAULT '',
   thumbnail_url TEXT,
   video_url TEXT,
+  caption_url TEXT,
   duration_minutes INTEGER NOT NULL DEFAULT 0,
   original_url TEXT NOT NULL DEFAULT '#',
   published_at DATE NOT NULL DEFAULT CURRENT_DATE,
@@ -451,6 +452,7 @@ CREATE TRIGGER set_updated_at_member_activity BEFORE UPDATE ON member_activity F
 
 ALTER TABLE messages ADD COLUMN IF NOT EXISTS thumbnail_url TEXT;
 ALTER TABLE messages ADD COLUMN IF NOT EXISTS video_url TEXT;
+ALTER TABLE messages ADD COLUMN IF NOT EXISTS caption_url TEXT;
 ALTER TABLE messages ADD COLUMN IF NOT EXISTS duration_minutes INTEGER NOT NULL DEFAULT 0;
 ALTER TABLE messages ADD COLUMN IF NOT EXISTS description TEXT NOT NULL DEFAULT '';
 
@@ -628,5 +630,4 @@ CREATE TABLE IF NOT EXISTS certificate_settings (
 INSERT INTO certificate_settings (id, branding_name, title, subtitle, description, signature_name, signature_title, footer_text)
 VALUES (1, 'The School of Faith', 'Certificate of Completion', 'This is proudly presented to', 'For successfully completing all requirements and modules of the discipleship course:', 'Pastor Sarah Jenkins', 'Senior Pastor & Founder', 'Accredited by The School of Faith Global Leadership Network')
 ON CONFLICT (id) DO NOTHING;
-
 

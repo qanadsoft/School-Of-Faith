@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Plus, Archive, ArchiveRestore, Play, Trash2, Video, X } from 'lucide-react';
 import { AdminLayout } from '@/components/admin/AdminLayout';
 import { AdminPageHeader } from '@/components/admin/AdminPageHeader';
@@ -9,8 +9,10 @@ import { ConfirmDialog } from '@/components/admin/ConfirmDialog';
 import { AdminErrorState } from '@/components/admin/AdminStates';
 import { Button } from '@/components/ui/Button';
 import { Input } from '@/components/ui/Input';
+import { VideoCaptionTrack } from '@/components/VideoCaptionTrack';
 import { api, asList } from '@/lib/api';
 import type { Topic } from '@/lib/types';
+import { formatVideoDuration } from '@/lib/video';
 
 type MessageRow = {
   id: string;
@@ -21,6 +23,7 @@ type MessageRow = {
   original_url?: string;
   thumbnail_url?: string | null;
   video_url?: string | null;
+  caption_url?: string | null;
   duration_minutes?: number;
   published_at: string;
   archived: boolean;
@@ -38,7 +41,8 @@ function blankForm(m?: MessageRow) {
     description: m?.description ?? '',
     thumbnailUrl: m?.thumbnail_url ?? '',
     videoUrl: m?.video_url ?? '',
-    durationMinutes: m?.duration_minutes ? String(m.duration_minutes) : '45',
+    captionUrl: m?.caption_url ?? '',
+    durationMinutes: m?.duration_minutes ? String(m.duration_minutes) : '',
     originalUrl: m?.original_url ?? '#',
     publishedAt: m?.published_at ? m.published_at.split('T')[0] : new Date().toISOString().split('T')[0],
     topicIds: m?.topics ? m.topics.map((t) => t.id) : [] as string[],
@@ -58,6 +62,8 @@ export function AdminMessagesPage() {
   const [form, setForm] = useState(blankForm());
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState('');
+  const [durationNotice, setDurationNotice] = useState('');
+  const durationDetectionId = useRef(0);
 
   // archive & delete confirms
   const [archiveTarget, setArchiveTarget] = useState<MessageRow | null>(null);
@@ -86,17 +92,49 @@ export function AdminMessagesPage() {
   useEffect(() => { refresh(); }, []);
 
   const openCreate = () => {
+    durationDetectionId.current += 1;
     setSelected(null);
     setForm(blankForm());
     setSaveError('');
+    setDurationNotice('');
     setDrawerOpen(true);
   };
 
   const openEdit = (m: MessageRow) => {
+    durationDetectionId.current += 1;
     setSelected(m);
     setForm(blankForm(m));
     setSaveError('');
+    setDurationNotice('');
     setDrawerOpen(true);
+  };
+
+  const detectVideoDuration = (url: string) => {
+    const detectionId = ++durationDetectionId.current;
+    if (!url.trim().startsWith('http')) {
+      setDurationNotice('');
+      return;
+    }
+
+    setDurationNotice('Detecting video duration…');
+    const video = document.createElement('video');
+    video.preload = 'metadata';
+    video.onloadedmetadata = () => {
+      if (detectionId !== durationDetectionId.current) return;
+      if (Number.isFinite(video.duration) && video.duration > 0) {
+        const minutes = Math.max(1, Math.round(video.duration / 60));
+        setForm((prev) => ({ ...prev, durationMinutes: String(minutes) }));
+        setDurationNotice(`Detected ${formatVideoDuration(minutes)}. You can adjust it below.`);
+      } else {
+        setDurationNotice('Could not detect duration. Enter it manually.');
+      }
+    };
+    video.onerror = () => {
+      if (detectionId === durationDetectionId.current) {
+        setDurationNotice('Could not load video metadata. Enter the duration manually.');
+      }
+    };
+    video.src = url.trim();
   };
 
   const toggleTopicSelection = (topicId: string) => {
@@ -127,6 +165,7 @@ export function AdminMessagesPage() {
         description: form.description.trim(),
         thumbnailUrl: form.thumbnailUrl.trim() || null,
         videoUrl: form.videoUrl.trim() || null,
+        captionUrl: form.captionUrl.trim() || null,
         durationMinutes: isNaN(duration) ? 0 : Math.max(0, duration),
         originalUrl: form.originalUrl.trim() || '#',
         publishedAt: form.publishedAt,
@@ -230,7 +269,7 @@ export function AdminMessagesPage() {
     {
       key: 'duration',
       header: 'Duration',
-      render: (m) => `${m.duration_minutes || 0} min`,
+      render: (m) => formatVideoDuration(m.duration_minutes),
     },
     {
       key: 'published',
@@ -393,11 +432,18 @@ export function AdminMessagesPage() {
               <label className="mb-1 block text-xs font-medium text-muted-foreground">Duration (Minutes)</label>
               <Input
                 type="number"
-                min="1"
-                placeholder="45"
+                min="0"
+                placeholder="Detect from video or enter minutes"
                 value={form.durationMinutes}
-                onChange={(e) => setForm((f) => ({ ...f, durationMinutes: e.target.value }))}
+                onChange={(e) => {
+                  durationDetectionId.current += 1;
+                  setDurationNotice('');
+                  setForm((f) => ({ ...f, durationMinutes: e.target.value }));
+                }}
               />
+              {durationNotice && (
+                <p className="mt-1 text-xs text-muted-foreground" role="status">{durationNotice}</p>
+              )}
             </div>
           </div>
 
@@ -415,9 +461,25 @@ export function AdminMessagesPage() {
               <Input
                 placeholder="https://storage.googleapis.com/…/video.mp4"
                 value={form.videoUrl}
-                onChange={(e) => setForm((f) => ({ ...f, videoUrl: e.target.value }))}
+                onChange={(e) => {
+                  durationDetectionId.current += 1;
+                  setDurationNotice('');
+                  setForm((f) => ({ ...f, videoUrl: e.target.value, durationMinutes: '' }));
+                }}
+                onBlur={(e) => detectVideoDuration(e.target.value)}
               />
             </div>
+          </div>
+
+          <div>
+            <label className="mb-1 block text-xs font-medium text-muted-foreground">Captions (WebVTT URL)</label>
+            <Input
+              type="url"
+              placeholder="https://example.com/captions.vtt"
+              value={form.captionUrl}
+              onChange={(e) => setForm((f) => ({ ...f, captionUrl: e.target.value }))}
+            />
+            <p className="mt-1 text-xs text-muted-foreground">Add a .vtt captions file to enable the CC control in video players.</p>
           </div>
 
           <div>
@@ -434,7 +496,9 @@ export function AdminMessagesPage() {
                 poster={form.thumbnailUrl || undefined}
                 controls
                 className="aspect-video w-full rounded-lg bg-black object-contain"
-              />
+              >
+                <VideoCaptionTrack src={form.captionUrl} />
+              </video>
             </div>
           )}
         </div>
@@ -447,7 +511,7 @@ export function AdminMessagesPage() {
             <div className="flex items-center justify-between border-b border-border p-4">
               <div>
                 <h3 className="font-serif text-lg font-semibold">{previewVideo.title}</h3>
-                <p className="text-xs text-muted-foreground">{previewVideo.speaker} · {previewVideo.duration_minutes} min</p>
+                <p className="text-xs text-muted-foreground">{previewVideo.speaker} · {formatVideoDuration(previewVideo.duration_minutes)}</p>
               </div>
               <button
                 onClick={() => setPreviewVideo(null)}
@@ -463,7 +527,9 @@ export function AdminMessagesPage() {
                 controls
                 autoPlay
                 className="aspect-video w-full object-contain"
-              />
+              >
+                <VideoCaptionTrack src={previewVideo.caption_url} />
+              </video>
             </div>
             {previewVideo.description && (
               <div className="p-4 text-sm text-muted-foreground">

@@ -417,6 +417,7 @@ export async function getSavedMessages(userId) {
           'archived', m.archived,
           'thumbnail_url', m.thumbnail_url,
           'video_url', m.video_url,
+          'caption_url', m.caption_url,
           'duration_minutes', m.duration_minutes
         ) AS message
       FROM saved_messages sm

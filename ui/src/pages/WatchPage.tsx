@@ -3,16 +3,11 @@ import { Play, Clock, Calendar, Bookmark, BookmarkCheck, Download, Check, X, Arr
 import { Button } from '@/components/ui/Button';
 import { Card, CardContent } from '@/components/ui/Card';
 import { Badge } from '@/components/ui/Badge';
+import { VideoCaptionTrack } from '@/components/VideoCaptionTrack';
 import { api, asList } from '@/lib/api';
 import { useAuth } from '@/lib/auth';
 import type { Message, Topic } from '@/lib/types';
-
-function formatDuration(durationMinutes?: number) {
-  if (!durationMinutes || durationMinutes <= 0) return '45m';
-  const hours = Math.floor(durationMinutes / 60);
-  const mins = durationMinutes % 60;
-  return hours > 0 ? `${hours}h ${mins > 0 ? `${mins}m` : ''}` : `${mins}m`;
-}
+import { formatVideoDuration } from '@/lib/video';
 
 function formatDate(dateStr?: string) {
   if (!dateStr) return '';
@@ -257,7 +252,11 @@ export function WatchPage() {
     if (!activeVideo) return;
     try {
       setDownloading(true);
-      const videoUrl = activeVideo.video_url || 'https://vjs.zencdn.net/v/oceans.mp4';
+      const videoUrl = activeVideo.video_url;
+      if (!videoUrl) {
+        console.error('Cannot download a video without a video URL.');
+        return;
+      }
       if (profile) {
         await api.recordDownload({
           resourceName: activeVideo.title,
@@ -361,7 +360,7 @@ export function WatchPage() {
                     <h3 className="mt-2 line-clamp-1 font-medium">{msg.title}</h3>
                     <p className="text-sm text-muted-foreground">{msg.speaker}</p>
                     <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
-                      <Clock className="h-3 w-3" /> {formatDuration(msg.duration_minutes)}
+                      <Clock className="h-3 w-3" /> {formatVideoDuration(msg.duration_minutes)}
                       <span>·</span>
                       <Calendar className="h-3 w-3" /> {formatDate(msg.published_at)}
                     </div>
@@ -397,7 +396,7 @@ export function WatchPage() {
                   <span>·</span>
                   <span>{formatDate(featuredVideo.published_at)}</span>
                   <span>·</span>
-                  <span>{formatDuration(featuredVideo.duration_minutes)}</span>
+                  <span>{formatVideoDuration(featuredVideo.duration_minutes)}</span>
                 </div>
                 <Button
                   onClick={() => playVideo(featuredVideo)}
@@ -448,7 +447,7 @@ export function WatchPage() {
                       <h3 className="mt-2 line-clamp-1 font-medium">{msg.title}</h3>
                       <p className="text-sm text-muted-foreground">{msg.speaker}</p>
                       <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
-                        <Clock className="h-3 w-3" /> {formatDuration(msg.duration_minutes)}
+                        <Clock className="h-3 w-3" /> {formatVideoDuration(msg.duration_minutes)}
                         <span>·</span>
                         <span>{Math.round(progressPct)}% watched</span>
                       </div>
@@ -495,7 +494,7 @@ export function WatchPage() {
                       )}
                       <h3 className="line-clamp-1 text-sm font-semibold">{msg.title}</h3>
                       <div className="mt-1 flex items-center gap-2 text-xs text-muted-foreground">
-                        <Clock className="h-3 w-3" /> {formatDuration(msg.duration_minutes)}
+                        <Clock className="h-3 w-3" /> {formatVideoDuration(msg.duration_minutes)}
                       </div>
                     </CardContent>
                   </Card>
@@ -539,7 +538,7 @@ export function WatchPage() {
                   )}
                 </div>
                 <p className="text-xs text-muted-foreground">
-                  {activeVideo.speaker} · {formatDate(activeVideo.published_at)} · {formatDuration(activeVideo.duration_minutes)}
+                  {activeVideo.speaker} · {formatDate(activeVideo.published_at)} · {formatVideoDuration(activeVideo.duration_minutes)}
                 </p>
               </div>
               <div className="flex items-center gap-2">
@@ -549,7 +548,7 @@ export function WatchPage() {
                       variant="outline"
                       size="sm"
                       onClick={handleDownload}
-                      disabled={downloading}
+                      disabled={downloading || !activeVideo.video_url}
                       className={isDownloaded ? 'text-emerald-600 border-emerald-500 bg-emerald-50 dark:bg-emerald-950/40' : ''}
                     >
                       {isDownloaded ? <Check className="h-4 w-4 mr-1.5" /> : <Download className="h-4 w-4 mr-1.5" />}
@@ -591,10 +590,8 @@ export function WatchPage() {
                 preload="auto"
                 className="aspect-video w-full object-contain"
               >
-                <source
-                  src={activeVideo.video_url || 'https://vjs.zencdn.net/v/oceans.mp4'}
-                  type="video/mp4"
-                />
+                {activeVideo.video_url && <source src={activeVideo.video_url} type="video/mp4" />}
+                <VideoCaptionTrack src={activeVideo.caption_url} />
                 Your browser does not support HTML5 video streaming.
               </video>
             </div>

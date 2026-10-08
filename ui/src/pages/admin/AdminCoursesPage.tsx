@@ -70,7 +70,7 @@ function blankLessonForm(l?: Lesson, nextOrder = 1) {
     title: l?.title ?? '',
     durationMinutes: l ? String(l.duration_minutes) : '30',
     sortOrder: l ? String(l.sort_order) : String(nextOrder),
-    videoUrl: l?.video_url ?? 'https://vjs.zencdn.net/v/oceans.mp4',
+    videoUrl: l?.video_url ?? '',
   };
 }
 

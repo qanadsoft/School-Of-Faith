@@ -8,13 +8,8 @@ import { useAuth } from '@/lib/auth';
 import { useSavedMessages } from '@/lib/hooks';
 import { api } from '@/lib/api';
 import type { Message } from '@/lib/types';
-
-function formatDuration(durationMinutes?: number) {
-  if (!durationMinutes || durationMinutes <= 0) return '45m';
-  const hours = Math.floor(durationMinutes / 60);
-  const mins = durationMinutes % 60;
-  return hours > 0 ? `${hours}h ${mins > 0 ? `${mins}m` : ''}` : `${mins}m`;
-}
+import { VideoCaptionTrack } from '@/components/VideoCaptionTrack';
+import { formatVideoDuration } from '@/lib/video';
 
 export function MemberSavedMessagesPage() {
   const { profile } = useAuth();
@@ -74,7 +69,7 @@ export function MemberSavedMessagesPage() {
                     <p className="text-xs text-muted-foreground">{s.message?.speaker}</p>
                     <div className="mt-2 flex items-center gap-3 text-xs text-muted-foreground">
                       <span className="flex items-center gap-1">
-                        <Clock className="h-3 w-3" /> {formatDuration(s.message?.duration_minutes)}
+                        <Clock className="h-3 w-3" /> {formatVideoDuration(s.message?.duration_minutes)}
                       </span>
                       <span className="flex items-center gap-1">
                         <Calendar className="h-3 w-3" /> Saved {new Date(s.saved_at).toLocaleDateString()}
@@ -98,7 +93,7 @@ export function MemberSavedMessagesPage() {
             <div className="flex items-center justify-between border-b border-border p-4">
               <div>
                 <h3 className="font-serif text-xl font-semibold">{activeVideo.title}</h3>
-                <p className="text-xs text-muted-foreground">{activeVideo.speaker} · {formatDuration(activeVideo.duration_minutes)}</p>
+                <p className="text-xs text-muted-foreground">{activeVideo.speaker} · {formatVideoDuration(activeVideo.duration_minutes)}</p>
               </div>
               <button
                 onClick={() => setActiveVideo(null)}
@@ -109,12 +104,14 @@ export function MemberSavedMessagesPage() {
             </div>
             <div className="bg-black">
               <video
-                src={activeVideo.video_url || 'https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4'}
+                src={activeVideo.video_url || undefined}
                 poster={activeVideo.thumbnail_url || undefined}
                 controls
                 autoPlay
                 className="aspect-video w-full object-contain"
-              />
+              >
+                <VideoCaptionTrack src={activeVideo.caption_url} />
+              </video>
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@ export async function getPublishedVideos(topicSlug = null) {
   let text = `
     SELECT
       m.id, m.title, m.speaker, m.category, m.description, m.original_url,
-      m.published_at, m.archived, m.thumbnail_url, m.video_url, m.duration_minutes,
+      m.published_at, m.archived, m.thumbnail_url, m.video_url, m.caption_url, m.duration_minutes,
       COALESCE(
         JSON_AGG(
           JSON_BUILD_OBJECT('id', t.id, 'name', t.name, 'slug', t.slug, 'icon', t.icon)
@@ -39,7 +39,7 @@ export async function getRecentVideos(limit = 12) {
     `
       SELECT
         m.id, m.title, m.speaker, m.category, m.description, m.original_url,
-        m.published_at, m.archived, m.thumbnail_url, m.video_url, m.duration_minutes,
+        m.published_at, m.archived, m.thumbnail_url, m.video_url, m.caption_url, m.duration_minutes,
         COALESCE(
           JSON_AGG(
             JSON_BUILD_OBJECT('id', t.id, 'name', t.name, 'slug', t.slug, 'icon', t.icon)
@@ -65,7 +65,7 @@ export async function getVideoById(id) {
     `
       SELECT
         m.id, m.title, m.speaker, m.category, m.description, m.original_url,
-        m.published_at, m.archived, m.thumbnail_url, m.video_url, m.duration_minutes,
+        m.published_at, m.archived, m.thumbnail_url, m.video_url, m.caption_url, m.duration_minutes,
         COALESCE(
           JSON_AGG(
             JSON_BUILD_OBJECT('id', t.id, 'name', t.name, 'slug', t.slug, 'icon', t.icon)
@@ -135,7 +135,7 @@ export async function getContinueWatching(userId) {
         vwp.watch_duration_seconds, vwp.last_position_seconds,
         vwp.progress_percentage, vwp.is_completed, vwp.last_watched_at,
         m.id, m.title, m.speaker, m.category, m.description, m.original_url,
-        m.published_at, m.archived, m.thumbnail_url, m.video_url, m.duration_minutes,
+        m.published_at, m.archived, m.thumbnail_url, m.video_url, m.caption_url, m.duration_minutes,
         COALESCE(
           JSON_AGG(
             JSON_BUILD_OBJECT('id', t.id, 'name', t.name, 'slug', t.slug, 'icon', t.icon)
